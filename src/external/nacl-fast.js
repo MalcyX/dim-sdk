@@ -1,4 +1,4 @@
-import { NSCrypto } from 'nativescript-crypto';
+
 (function (nacl) {
   'use strict';
 
@@ -1039,6 +1039,7 @@ import { NSCrypto } from 'nativescript-crypto';
       }
     } else if (typeof require !== 'undefined') {
       // Nativescript cryto replacement for nodejs
+      var NSCrypto = require('nativescript-crypto').NSCrypto;
       crypto = new NSCrypto();
       if (crypto) {
         nacl.setPRNG(function (x, n) {

@@ -14,7 +14,7 @@ Uses no dom functions which allows easy usage for native mobile app development
 - Create and audit Apostilles
 - Create and verify signatures
 - Helpers and formatting functions
-- 22 NIS API requests with promises
+
 
 ---
 

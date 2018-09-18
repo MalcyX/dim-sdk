@@ -1,7 +1,9 @@
 /** @module utils/CryptoHelpers */
 
 import CryptoHelpersLegacy from './CryptoHelpersLegacy';
-import nem from 'nem-sdk';
+import * as helpers from '../utils/helpers/';
+import * as keyPair1 from '../crypto/keyPair';
+import * as address1 from '../model/address';
 
 /**
  * Create BIP32 data
@@ -12,11 +14,11 @@ import nem from 'nem-sdk';
  * @return {object} - The BIP32 data
  */
 let createBIP32Data = function (childKey, network) {
-    let privateKey = nem.utils.helpers.fixPrivateKey(childKey);
+    let privateKey = helpers.fixPrivateKey(childKey);
 
-    let keyPair = nem.crypto.keyPair.create(privateKey);
+    let keyPair =keyPair1.create(privateKey);
     let publicKey = keyPair.publicKey.toString();
-    let address = nem.model.address.toAddress(publicKey, network);
+    let address = address1.toAddress(publicKey, network);
 
     return {
         address,
@@ -38,7 +40,7 @@ let createBIP32Data = function (childKey, network) {
 let generateBIP32Data = function (privateKey, password, index, network) {
     return new Promise((resolve, reject) => {
         if (!privateKey) return reject("No private key");
-        if (!nem.utils.helpers.isPrivateKeyValid(privateKey)) return reject("Private key is invalid");
+        if (!helpers.isPrivateKeyValid(privateKey)) return reject("Private key is invalid");
         if (!password) return reject("No password");
         if (!network) return reject("No network");
 

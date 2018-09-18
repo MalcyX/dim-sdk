@@ -1039,8 +1039,7 @@
       }
     } else if (typeof require !== 'undefined') {
       // Nativescript cryto replacement for nodejs
-      var NSCrypto = require('nativescript-crypto').NSCrypto;
-      crypto = new NSCrypto();
+      crypto = require('crypto');
       if (crypto) {
         nacl.setPRNG(function (x, n) {
           var i, v = crypto.secureRandomBytes(n);

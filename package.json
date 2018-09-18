@@ -1,6 +1,6 @@
 {
   "name": "dim-sdk",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Light weight library for interacting with the nem blockchain.",
   "main": "build/index.js",
   "repository": {

@@ -19,6 +19,12 @@ import fees from './model/fees';
 import CryptoJS from 'crypto-js';
 import apostille from './model/apostille';
 
+import cryptoHelpersFromNano from './nano/CryptoHelpers';
+import exchanges from './nano/exchanges';
+import helpersFromNano from './nano/helpers';
+import languages from './nano/languages';
+import ntyFromNano from './nano/nty';
+
 export default {
 	crypto: {
 		keyPair: {
@@ -47,5 +53,12 @@ export default {
 		nty,
 		serialization,
 		format
+	},
+	nano: {
+		cryptoHelpersFromNano,
+		exchanges,
+		helpersFromNano,
+		languages,
+		ntyFromNano
 	}
 };

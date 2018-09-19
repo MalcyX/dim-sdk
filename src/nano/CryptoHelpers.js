@@ -16,7 +16,7 @@ import * as address1 from '../model/address';
 let createBIP32Data = function (childKey, network) {
     let privateKey = helpers.fixPrivateKey(childKey);
 
-    let keyPair =keyPair1.create(privateKey);
+    let keyPair = keyPair1.create(privateKey);
     let publicKey = keyPair.publicKey.toString();
     let address = address1.toAddress(publicKey, network);
 
@@ -53,5 +53,5 @@ let generateBIP32Data = function (privateKey, password, index, network) {
 };
 
 module.exports = {
-    generateBIP32Data,
+    generateBIP32Data
 };

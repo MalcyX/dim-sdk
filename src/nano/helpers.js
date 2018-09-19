@@ -1,6 +1,10 @@
 /** @module utils/helpers */
 
-import nem from 'nem-sdk';
+import * as helpers from '../utils/helpers/';
+import * as format from '../utils/format';
+import * as transactionTypes from '../model/transactionTypes';
+import * as network1 from '../model/network';
+
 import Exchanges from './exchanges';
 
 /**
@@ -83,12 +87,12 @@ let cleanMosaicAmounts = function(elem, mosaicDefinitions) {
     }
     for (let i = 0; i < copy.length; i++) {
         // Check text amount validity
-        if(!nem.utils.helpers.isTextAmountValid(copy[i].quantity)) {
+        if(!helpers.isTextAmountValid(copy[i].quantity)) {
             return [];
         } else {
-            let divisibility = mosaicDefinitions[nem.utils.format.mosaicIdToName(copy[i].mosaicId)].mosaicDefinition.properties[0].value;
+            let divisibility = mosaicDefinitions[format.mosaicIdToName(copy[i].mosaicId)].mosaicDefinition.properties[0].value;
             // Get quantity from inputed amount
-            copy[i].quantity = Math.round(nem.utils.helpers.cleanTextAmount(copy[i].quantity) * Math.pow(10, divisibility));
+            copy[i].quantity = Math.round(helpers.cleanTextAmount(copy[i].quantity) * Math.pow(10, divisibility));
         }
     }
     return copy;
@@ -121,7 +125,7 @@ let namespaceIsValid = function(ns, isParent) {
  *
  * @return {boolean} - True if correct, false otherwise
  */
-let isHexadecimal = nem.utils.helpers.isHexadecimal;
+let isHexadecimal = helpers.isHexadecimal;
 
 /**
  * Check if a text input amount is valid
@@ -130,7 +134,7 @@ let isHexadecimal = nem.utils.helpers.isHexadecimal;
  *
  * @return {boolean} - True if valid, false otherwise
  */
-let isTextAmountValid = nem.utils.helpers.isTextAmountValid;
+let isTextAmountValid = helpers.isTextAmountValid;
 
 /**
  * Verify if a message is set when sending to an exchange
@@ -141,7 +145,7 @@ let isTextAmountValid = nem.utils.helpers.isTextAmountValid;
  */
 let isValidForExchanges = function(entity) {
     const exchanges = Exchanges.data;
-    let tx = entity.type === nem.model.transactionTypes.multisigTransaction ? entity.otherTrans : entity;
+    let tx = entity.type === transactionTypes.multisigTransaction ? entity.otherTrans : entity;
     for (let i = 0; i < exchanges.length; i++) {
         let isExchange = exchanges[i].address === tx.recipient;
         let hasMessage = tx.message.payload.length > 0;
@@ -251,9 +255,9 @@ let versionCompare = function(v1, v2, options) {
 let fixTimestamp = function(transaction, chainTime, network) {
     let d = new Date();
     let timeStamp = Math.floor(chainTime) + Math.floor(d.getSeconds() / 10);
-    let due = network === nem.model.network.data.testnet.id ? 60 : 24 * 60;
+    let due = network === network1.data.testnet.id ? 60 : 24 * 60;
     let deadline = timeStamp + due * 60
-    if (transaction.type === nem.model.transactionTypes.multisigTransaction) {
+    if (transaction.type === transactionTypes.multisigTransaction) {
         transaction.otherTrans.timeStamp = timeStamp;
         transaction.otherTrans.deadline = deadline;
     } else {
